@@ -2,40 +2,37 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-tools = {
-    "tools": [
-        {
-            "name": "get_available_slots",
-            "description": "Check free slots in Google Calendar",
-            "input_schema": {
-                "type": "object",
-                "properties": {
-                    "start": {"type": "string", "format": "date-time"},
-                    "end": {"type": "string", "format": "date-time"},
-                    "duration_minutes": {"type": "integer"}
-                },
-                "required": ["start", "end", "duration_minutes"]
-            }
-        },
-        {
-            "name": "book_meeting",
-            "description": "Create a new meeting in Google Calendar",
-            "input_schema": {
-                "type": "object",
-                "properties": {
-                    "start": {"type": "string", "format": "date-time"},
-                    "end": {"type": "string", "format": "date-time"},
-                    "summary": {"type": "string"},
-                    "description": {"type": "string"},
-                    "attendees": {"type": "array", "items": {"type": "string"}}
-                },
-                "required": ["start", "end", "summary"]
-            }
+tools = [
+    {
+        "name": "get_available_slots",
+        "description": "Check free slots in Google Calendar",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "start": {"type": "string", "format": "date-time"},
+                "end": {"type": "string", "format": "date-time"},
+                "duration_minutes": {"type": "integer"}
+            },
+            "required": ["start", "end", "duration_minutes"]
         }
-    ]
-}
+    },
+    {
+        "name": "book_meeting",
+        "description": "Create a new meeting in Google Calendar",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "start": {"type": "string", "format": "date-time"},
+                "end": {"type": "string", "format": "date-time"},
+                "summary": {"type": "string"},
+                "description": {"type": "string"},
+                "attendees": {"type": "array", "items": {"type": "string"}}
+            },
+            "required": ["start", "end", "summary"]
+        }
+    }
+]
 
-# Serve tools JSON at multiple endpoints
 @app.route("/")
 @app.route("/mcp/tools")
 @app.route("/sse")
