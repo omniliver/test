@@ -1,4 +1,5 @@
-from flask import Flask, jsonify
+from flask import Flask, Response
+import json
 
 app = Flask(__name__)
 
@@ -37,7 +38,10 @@ tools = [
 @app.route("/mcp/tools")
 @app.route("/sse")
 def serve_tools():
-    return jsonify(tools)
+    return Response(
+        json.dumps(tools, ensure_ascii=False),
+        mimetype="application/json"
+    )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
